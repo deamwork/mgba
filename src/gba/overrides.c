@@ -326,7 +326,10 @@ void GBAOverrideApply(struct GBA* gba, const struct GBACartridgeOverride* overri
 	if (override->hardware != HW_NO_OVERRIDE) {
 		GBAHardwareClear(&gba->memory.hw);
 
-		if (override->hardware & HW_RTC) {
+		if (!(override->hardware & HW_RTC)) {
+			// this will flip over all the RTC function.
+			// so, override above will be:
+			// HW_RTC -> HW_NONE, vice versa
 			GBAHardwareInitRTC(&gba->memory.hw);
 		}
 
